@@ -7,6 +7,23 @@ from copy import deepcopy
 class DatasetCatalog(object):
     DATA_DIR = "datasets"
     DATASETS = {
+
+        #######################
+        'coco_panel4000_train': {
+            # "img_dir": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/coco_train",
+            # "ann_file": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/panel_coco.json"
+            "img_dir": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/tmp_train",
+            "ann_file": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/tmp_coco.json"            
+        },
+        'coco_panel4000_val': {
+            # "img_dir": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/coco_train",
+            # "ann_file": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/panel_coco.json"
+            "img_dir": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/tmp_train",
+            "ann_file": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/tmp_coco.json"            
+        },        
+        #######################
+
+
         "coco_2017_train": {
             "img_dir": "coco/train2017",
             "ann_file": "coco/annotations/instances_train2017.json"

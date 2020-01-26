@@ -40,13 +40,19 @@ _C.MODEL.WEIGHT = ""
 # -----------------------------------------------------------------------------
 _C.INPUT = CN()
 # Size of the smallest side of the image during training
-_C.INPUT.MIN_SIZE_TRAIN = (800,)  # (800,)
+# _C.INPUT.MIN_SIZE_TRAIN = (800,)  # (800,)
+_C.INPUT.MIN_SIZE_TRAIN = (480,) 
 # Maximum size of the side of the image during training
-_C.INPUT.MAX_SIZE_TRAIN = 1333
-# Size of the smallest side of the image during testing
-_C.INPUT.MIN_SIZE_TEST = 800
-# Maximum size of the side of the image during testing
-_C.INPUT.MAX_SIZE_TEST = 1333
+# _C.INPUT.MAX_SIZE_TRAIN = 1333
+_C.INPUT.MAX_SIZE_TRAIN = 640
+
+# _C.INPUT.MIN_SIZE_TEST = 800
+# _C.INPUT.MAX_SIZE_TEST = 1333
+_C.INPUT.MIN_SIZE_TEST = 480
+_C.INPUT.MAX_SIZE_TEST = 640
+
+
+
 # Values to be used for image normalization
 _C.INPUT.PIXEL_MEAN = [102.9801, 115.9465, 122.7717]
 # Values to be used for image normalization
@@ -79,6 +85,7 @@ _C.DATASETS.TEST = ()
 _C.DATALOADER = CN()
 # Number of data loading threads
 _C.DATALOADER.NUM_WORKERS = 4
+# _C.DATALOADER.NUM_WORKERS = 0
 # If > 0, this enforces that each collated batch should have a size divisible
 # by SIZE_DIVISIBILITY
 _C.DATALOADER.SIZE_DIVISIBILITY = 0

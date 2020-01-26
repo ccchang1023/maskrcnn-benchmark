@@ -30,12 +30,19 @@ MODEL:
     SHARE_BOX_FEATURE_EXTRACTOR: False
   MASK_ON: True
 DATASETS:
-  TRAIN: ("coco_2014_train", "coco_2014_valminusminival")
-  TEST: ("coco_2014_minival",)
+  # TRAIN: ("coco_2014_train", "coco_2014_valminusminival")
+  # TEST: ("coco_2014_minival",)
+  TRAIN: ("coco_panel4000_train", ) #注意如果想最小幅度改动代码，如果你用的是coco格式，那个前缀就保持coco_
+  TEST: ("coco_panel4000_val",)     #后缀就是_val, _test。如果只有一个数据集, 逗号不能删掉
+
 DATALOADER:
   SIZE_DIVISIBILITY: 32
+  NUM_WORKERS: 0
 SOLVER:
-  BASE_LR: 0.02
+  # BASE_LR: 0.02
+  BASE_LR: 0.0025
   WEIGHT_DECAY: 0.0001
   STEPS: (60000, 80000)
   MAX_ITER: 90000
+
+OUTPUT_DIR: "./out/"   #这个决定了模型的.pth文件，checkpoint文件和命令行输出的log的存放的地址。一般训练完成以后会
