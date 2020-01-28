@@ -84,8 +84,8 @@ _C.DATASETS.TEST = ()
 # -----------------------------------------------------------------------------
 _C.DATALOADER = CN()
 # Number of data loading threads
-_C.DATALOADER.NUM_WORKERS = 4
-# _C.DATALOADER.NUM_WORKERS = 0
+# _C.DATALOADER.NUM_WORKERS = 4
+_C.DATALOADER.NUM_WORKERS = 10
 # If > 0, this enforces that each collated batch should have a size divisible
 # by SIZE_DIVISIBILITY
 _C.DATALOADER.SIZE_DIVISIBILITY = 0
@@ -415,7 +415,7 @@ _C.SOLVER.WARMUP_FACTOR = 1.0 / 3
 _C.SOLVER.WARMUP_ITERS = 500
 _C.SOLVER.WARMUP_METHOD = "linear"
 
-_C.SOLVER.CHECKPOINT_PERIOD = 2500
+_C.SOLVER.CHECKPOINT_PERIOD = 5000
 _C.SOLVER.TEST_PERIOD = 0
 
 # Number of images per batch

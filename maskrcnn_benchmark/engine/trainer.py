@@ -69,6 +69,9 @@ def do_train(
         iou_types = iou_types + ("keypoints",)
     dataset_names = cfg.DATASETS.TEST
 
+    ###Add by chuan
+    min_val_loss = 100000
+
     for iteration, (images, targets, _) in enumerate(data_loader, start_iter):
         
         if any(len(target) < 1 for target in targets):
@@ -98,10 +101,8 @@ def do_train(
         optimizer.step()
         scheduler.step()
 
-
         ###Add by chuan
         torch.cuda.empty_cache()
-
 
         batch_time = time.time() - end
         end = time.time()
@@ -129,7 +130,8 @@ def do_train(
                 )
             )
         if iteration % checkpoint_period == 0:
-            checkpointer.save("model_{:07d}".format(iteration), **arguments)
+            checkpointer.save("model_iter_{}_loss{}".format(iteration,losses_reduced.item()), **arguments)
+
         if data_loader_val is not None and test_period > 0 and iteration % test_period == 0:
             meters_val = MetricLogger(delimiter="  ")
             synchronize()
@@ -148,6 +150,8 @@ def do_train(
             )
             synchronize()
             model.train()
+            val_loss_sum = 0
+            # data_num = 0
             with torch.no_grad():
                 # Should be one image for each GPU:
                 for iteration_val, (images_val, targets_val, _) in enumerate(tqdm(data_loader_val)):
@@ -158,6 +162,20 @@ def do_train(
                     loss_dict_reduced = reduce_loss_dict(loss_dict)
                     losses_reduced = sum(loss for loss in loss_dict_reduced.values())
                     meters_val.update(loss=losses_reduced, **loss_dict_reduced)
+
+                    val_loss_sum += losses_reduced.item()
+                    # data_num += 1
+                    # print("!!!!Val loss:",loss_dict)
+                    # print("!!! Val loss reduced:",losses_reduced)
+
+            # val_loss_sum /= data_num
+
+            print("Current MIN val loss:",min_val_loss)
+            if val_loss_sum < min_val_loss:
+                min_val_loss = val_loss_sum
+                if iteration >= 100:
+                    checkpointer.save("model_val_iter{}loss_{:.5f}".format(iteration,min_val_loss), **arguments)
+
             synchronize()
             logger.info(
                 meters_val.delimiter.join(

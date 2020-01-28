@@ -213,6 +213,11 @@ class COCODemo(object):
         predictions = self.compute_prediction(image)
         top_predictions = self.select_top_predictions(predictions)
 
+        # mask = top_predictions.get_field('labels')
+        # print(mask.size())
+        # print(mask)
+        # stophere
+
         result = image.copy()
         if self.show_mask_heatmaps:
             return self.create_mask_montage(result, top_predictions)
@@ -287,8 +292,14 @@ class COCODemo(object):
         """
         Simple function that adds fixed colors depending on the class
         """
-        colors = labels[:, None] * self.palette
-        colors = (colors % 255).numpy().astype("uint8")
+        # colors = labels[:, None] * self.palette
+        # colors = (colors % 255).numpy().astype("uint8")
+
+        colors = []
+        for i in range(len(labels)):
+            colors.append([255,0,0])
+        colors = np.uint8(colors)
+
         return colors
 
     def overlay_boxes(self, image, predictions):
@@ -301,15 +312,23 @@ class COCODemo(object):
                 It should contain the field `labels`.
         """
         labels = predictions.get_field("labels")
+
+        # print(np.shape(labels))    #torch.size([2])
+        # print(labels)              #tensor([1,1])
+
         boxes = predictions.bbox
 
+        # print(np.shape(boxes))    #torch.size([2,4])
+        # print(boxes)              #([top_left_x,top_left_y, right_down_x, right_down_y])
+
         colors = self.compute_colors_for_labels(labels).tolist()
+        # print("color:",colors)     #[[1, 127, 31], [1, 127, 31]]
 
         for box, color in zip(boxes, colors):
             box = box.to(torch.int64)
             top_left, bottom_right = box[:2].tolist(), box[2:].tolist()
             image = cv2.rectangle(
-                image, tuple(top_left), tuple(bottom_right), tuple(color), 1
+                image, tuple(top_left), tuple(bottom_right), tuple(color), 3
             )
 
         return image
@@ -334,9 +353,18 @@ class COCODemo(object):
             contours, hierarchy = cv2_util.findContours(
                 thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE
             )
-            image = cv2.drawContours(image, contours, -1, color, 3)
+            # image = cv2.drawContours(image, contours, -1, color, 3)
 
-        composite = image
+            mask = np.transpose(mask,(1,2,0))
+            mask = np.tile(mask*255,(1,1,3))
+            mask[:,:,0] = 0
+            mask[:,:,2] = 0
+            # print(np.shape(image))
+            # print(np.shape(mask))
+            mask_image = cv2.addWeighted(image,1,mask,0.3,0,image)
+
+        # composite = image
+        composite = mask_image
 
         return composite
 
@@ -405,7 +433,7 @@ class COCODemo(object):
             x, y = box[:2]
             s = template.format(label, score)
             cv2.putText(
-                image, s, (x, y), cv2.FONT_HERSHEY_SIMPLEX, .5, (255, 255, 255), 1
+                image, s, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 3
             )
 
         return image
