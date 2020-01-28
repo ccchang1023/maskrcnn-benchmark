@@ -167,14 +167,13 @@ def do_train(
                     # data_num += 1
                     # print("!!!!Val loss:",loss_dict)
                     # print("!!! Val loss reduced:",losses_reduced)
-
             # val_loss_sum /= data_num
 
-            print("Current MIN val loss:",min_val_loss)
             if val_loss_sum < min_val_loss:
                 min_val_loss = val_loss_sum
                 if iteration >= 100:
                     checkpointer.save("model_val_iter{}loss_{:.5f}".format(iteration,min_val_loss), **arguments)
+            print("Current MIN val loss:",min_val_loss)
 
             synchronize()
             logger.info(

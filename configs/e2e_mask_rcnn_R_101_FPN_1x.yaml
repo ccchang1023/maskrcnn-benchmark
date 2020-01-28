@@ -32,8 +32,10 @@ MODEL:
 DATASETS:
   # TRAIN: ("coco_2014_train", "coco_2014_valminusminival")
   # TEST: ("coco_2014_minival",)
-  TRAIN: ("coco_panel50000_train",)
-  TEST: ("coco_panel50000_val",)
+  # TRAIN: ("coco_panel50000_train",)
+  # TEST: ("coco_panel50000_val",)
+  TRAIN: ("coco_panel200k_train",)
+  TEST: ("coco_panel200k_val",)
 
 DATALOADER:
   SIZE_DIVISIBILITY: 32
@@ -43,4 +45,4 @@ SOLVER:
   STEPS: (60000, 80000)
   MAX_ITER: 90000
 
-OUTPUT_DIR: "./out/"
+OUTPUT_DIR: "/home/ccchang/disk2_1tb_ssd/Exp_tmp_dir/maskrcnn_200k/"

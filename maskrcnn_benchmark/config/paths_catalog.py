@@ -23,16 +23,11 @@ class DatasetCatalog(object):
             "ann_file": "/home/ccchang/disk2_1tb_ssd/robot_dataset/panel_exp_fixed/mycoco/real_panel_coco.json"
         },        
 
-
         'coco_panel200k_train': {
-            "img_dir": "/home/ccchang/disk2_1tb_ssd/robot_dataset/panel_exp_fixed/mycoco/coco_train",
-            "ann_file": "/home/ccchang/disk2_1tb_ssd/robot_dataset/panel_exp_fixed/mycoco/panel_coco.json"
-            # "img_dir": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/tmp_train",
-            # "ann_file": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/tmp_coco.json"            
+            "img_dir": "/home/ccchang/disk2_1tb_ssd/robot_dataset/panel_exp_fixed/mycoco/coco_train_200k",
+            "ann_file": "/home/ccchang/disk2_1tb_ssd/robot_dataset/panel_exp_fixed/mycoco/panel_coco_200k.json"
         },
         'coco_panel200k_val': {
-            # "img_dir": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/coco_train",
-            # "ann_file": "/home/geroko/Mask_rcnn_pytorch/pycococreator/panel_examples/panel_coco.json"
             "img_dir": "/home/ccchang/disk2_1tb_ssd/robot_dataset/panel_exp_fixed/mycoco/real_coco_train",
             "ann_file": "/home/ccchang/disk2_1tb_ssd/robot_dataset/panel_exp_fixed/mycoco/real_panel_coco.json"
         },        
